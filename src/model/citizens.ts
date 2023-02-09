@@ -53,8 +53,8 @@ CitizenInstance.init(
         notNull: {
           msg: "address is required",
         },
-        isEmail: {
-          msg: "Please provide a a valid address",
+        notEmpty: {
+          msg: "address is required",
         },
       },
     },

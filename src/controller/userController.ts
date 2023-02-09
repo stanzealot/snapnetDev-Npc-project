@@ -222,7 +222,14 @@ export async function getSingleLga(
 ) {
   try {
     const { id } = req.params;
-    const record = await LgasInstance.findOne({ where: { id } });
+    const record = await LgasInstance.findOne({ where: { id },
+      include: [
+        {
+            model: StatesInstance,
+            as: 'state',
+        }
+    ],
+    });
 
     res.status(200).json({
       message:"Lga fetched successfully",
@@ -271,7 +278,14 @@ export async function getSingleWard(
 ) {
   try {
     const { id } = req.params;
-    const record = await WardsInstance.findOne({ where: { id } });
+    const record = await WardsInstance.findOne({ where: { id },
+      include: [
+        {
+            model: LgasInstance,
+            as: 'lga',
+        }
+    ],
+    });
 
     res.status(200).json({
       message:"ward fetched successfully",
@@ -308,6 +322,7 @@ export async function CreateCitizen(
     });
    res.status(201).json({record})
   } catch (err) {
+    console.log(err);
     res.status(500).json({
       msg: "failed to create citizen",
       route: "/create",
@@ -322,7 +337,14 @@ export async function getSingleCitizen(
 ) {
   try {
     const { id } = req.params;
-    const record = await CitizenInstance.findOne({ where: { id } });
+    const record = await CitizenInstance.findOne({ where: { id },
+      include: [
+        {
+            model: WardsInstance,
+            as: 'ward',
+        }
+    ],
+    });
 
     res.status(200).json({
       message:"citizen fetched successfully",
@@ -342,7 +364,14 @@ export async function getAllCitizens(
   next: NextFunction
 ) {
   try {
-    const record = await CitizenInstance.findAll();
+    const record = await CitizenInstance.findAll({
+      include: [
+        {
+            model: WardsInstance,
+            as: 'ward',
+        }
+    ],
+    });
 
     res.status(200).json({
       message:"All citizens fetched successfully",
@@ -368,7 +397,13 @@ export async function searchByName(
         fullname:{
           [Op.like]: `%${searchParam}%`
         }
-      }
+      },
+      include: [
+        {
+            model: WardsInstance,
+            as: 'ward',
+        }
+    ],
     });
 
     res.status(200).json({
@@ -395,7 +430,13 @@ export async function searchByPhone(
         phonenumber:{
           [Op.like]: `%${searchParam}%` 
         }
-      }
+      },
+      include: [
+        {
+            model: WardsInstance,
+            as: 'ward',
+        }
+    ],
     });
 
     res.status(200).json({
