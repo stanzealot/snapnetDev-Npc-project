@@ -4,6 +4,7 @@ import {
   LoginUser,LogoutUser,CreateUser,getSingleUser,CreateState,getSingleState,CreateLga,searchByName,
   getSingleLga,CreateWard,getSingleWard,CreateCitizen,getSingleCitizen,getAllCitizens,searchByPhone
 } from "../controller/userController";
+import { auth } from "../middleware/auth";
 
 
 
@@ -19,7 +20,7 @@ router.post("/create-ward",CreateWard)
 router.get("/get-ward",getSingleWard)
 router.post("/create-citizen",CreateCitizen)
 router.get("/get-citizen",getSingleCitizen)
-router.get("/get-all-citizens",getAllCitizens)
+router.get("/get-all-citizens",auth,getAllCitizens)
 router.post("/search-by-name",searchByName)
 router.post("/search-by-phone",searchByPhone)
 
