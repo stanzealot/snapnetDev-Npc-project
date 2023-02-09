@@ -9,9 +9,8 @@ export async function auth(
   next: NextFunction
 ) {
   try {
-    const auth =
-      // req.headers["authorization"] || req.headers["Authorization"]; // Iff using headers
-      req.cookies.authorization;
+    const auth = req.headers["Authorization"];
+      
     if (!auth) {
       res.status(401).json({
         Error: "Kindly login from the login page",
