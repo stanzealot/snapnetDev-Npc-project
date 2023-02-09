@@ -10,7 +10,7 @@ import { auth } from "../middleware/auth";
 
 router.post("/login", LoginUser);
 router.get("/logout", LogoutUser);
-router.post("/create",auth,CreateUser)
+router.post("/create",CreateUser)
 router.get("/get-user/:id",getSingleUser)
 router.post("/create-state",auth,CreateState)
 router.get("/get-state/:id",getSingleState)
